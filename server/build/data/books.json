@@ -1,0 +1,62 @@
+[
+    {
+        "id": 1,
+        "title": "Dynamic Paradigm Shift",
+        "author": "John Doe",
+        "genre": "fiction"
+    },
+    {
+        "id": 2,
+        "title": "Innovative Solution Strategy",
+        "author": "Jane Smith",
+        "genre": "essay"
+    },
+    {
+        "id": 3,
+        "title": "Holistic Market Vision",
+        "author": "Alice Johnson",
+        "genre": "history"
+    },
+    {
+        "id": 4,
+        "title": "Strategic Business Model",
+        "author": "Bob Williams",
+        "genre": "children"
+    },
+    {
+        "id": 5,
+        "title": "Optimal Operation Framework",
+        "author": "Charlie Brown",
+        "genre": "fiction"
+    },
+    {
+        "id": 6,
+        "title": "Integrated System Approach",
+        "author": "David Clark",
+        "genre": "essay"
+    },
+    {
+        "id": 7,
+        "title": "Proactive Product Perspective",
+        "author": "Eva Martinez",
+        "genre": "history"
+    },
+    {
+        "id": 8,
+        "title": "Reactive Revenue Recognition",
+        "author": "Frank White",
+        "genre": "children"
+    },
+    {
+        "id": 9,
+        "title": "Sustainable Supply Chain",
+        "author": "Grace Lee",
+        "genre": "fiction"
+    },
+    {
+        "id": 10,
+        "title": "Tactical Technology Transformation",
+        "author": "Henry Green",
+        "genre": "essay"
+    }
+]
