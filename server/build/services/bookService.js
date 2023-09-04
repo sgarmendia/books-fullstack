@@ -54,13 +54,16 @@ var upsertBook = function (book) { return __awaiter(void 0, void 0, void 0, func
                 return [4 /*yield*/, books_1.BookModel.create(book)];
             case 1:
                 createdBook = _a.sent();
-                return [2 /*return*/, "Book with ID " + createdBook.id + " was added."];
+                return [2 /*return*/, {
+                        message: "Book with ID " + createdBook.id + " was added.",
+                        book: createdBook,
+                    }];
             case 2: return [4 /*yield*/, books_1.BookModel.update(book)];
             case 3:
                 updatedBook = _a.sent();
                 return [2 /*return*/, updatedBook
-                        ? "Book with ID " + updatedBook.id + " updated."
-                        : "Unable to update."];
+                        ? { message: "Book with ID " + updatedBook.id + " updated.", book: updatedBook }
+                        : { message: "Unable to update." }];
         }
     });
 }); };

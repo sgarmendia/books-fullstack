@@ -62,9 +62,7 @@ var getBooks = function (_req, res) { return __awaiter(void 0, void 0, void 0, f
     var books;
     return __generator(this, function (_a) {
         switch (_a.label) {
-            case 0:
-                console.log("books", _req.cookies);
-                return [4 /*yield*/, bookService.getBooks()];
+            case 0: return [4 /*yield*/, bookService.getBooks()];
             case 1:
                 books = _a.sent();
                 res.send(books);
@@ -84,7 +82,7 @@ var getBooksById = function (req, res) { return __awaiter(void 0, void 0, void 0
 }); };
 exports.getBooksById = getBooksById;
 var upsertBook = function (req, res, next) { return __awaiter(void 0, void 0, void 0, function () {
-    var book, validateBook, message, error_1;
+    var book, validateBook, data, error_1;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
@@ -101,8 +99,8 @@ var upsertBook = function (req, res, next) { return __awaiter(void 0, void 0, vo
                 }
                 return [4 /*yield*/, bookService.upsertBook(book)];
             case 2:
-                message = _a.sent();
-                res.send(message);
+                data = _a.sent();
+                res.send(data);
                 return [3 /*break*/, 4];
             case 3:
                 error_1 = _a.sent();
@@ -122,6 +120,10 @@ var deleteBookById = function (req, res) { return __awaiter(void 0, void 0, void
                 return [4 /*yield*/, bookService.deleteBook(id)];
             case 1:
                 message = _a.sent();
+                if (message.includes("not found")) {
+                    res.status(401).send(message);
+                    return [2 /*return*/];
+                }
                 res.send(message);
                 return [2 /*return*/];
         }
