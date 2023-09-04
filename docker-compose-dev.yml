@@ -1,0 +1,25 @@
+version: "3"
+services:
+  client:
+    build:
+      context: ./client
+    volumes:
+      - ./client:/app
+      - /app/node_modules
+  server:
+    build:
+      context: ./server
+    # ports:
+    #   - "4000:4000"
+    volumes:
+      - ./server:/app
+      - /app/node_modules
+  nginx:
+    depends_on:
+      - server
+      - client
+    restart: always
+    build:
+      context: ./nginx
+    ports:
+      - "3050:80"
