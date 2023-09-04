@@ -15,3 +15,10 @@ export interface BookType {
 }
 
 export type SaveBookType = Omit<BookType, "id"> & { id?: BookId };
+
+export enum UserStatus {
+	Unregistered = "unregistered",
+	Registered = "registered",
+	NotFound = "not_found",
+	WrongPassword = "wrong_password",
+}

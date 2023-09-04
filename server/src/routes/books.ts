@@ -5,12 +5,13 @@ import {
 	upsertBook,
 	deleteBookById,
 } from "../controllers/books";
+import { verifyJWT } from "../middlewares/verifySession";
 
 const router = Router();
 
 router.get("/books", getBooks);
 router.get("/book/:id", getBooksById);
-router.put("/book", upsertBook);
-router.delete("/book/:id", deleteBookById);
+router.put("/book", verifyJWT, upsertBook);
+router.delete("/book/:id", verifyJWT, deleteBookById);
 
 export default router;

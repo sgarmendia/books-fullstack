@@ -62,7 +62,9 @@ var getBooks = function (_req, res) { return __awaiter(void 0, void 0, void 0, f
     var books;
     return __generator(this, function (_a) {
         switch (_a.label) {
-            case 0: return [4 /*yield*/, bookService.getBooks()];
+            case 0:
+                console.log("books", _req.cookies);
+                return [4 /*yield*/, bookService.getBooks()];
             case 1:
                 books = _a.sent();
                 res.send(books);

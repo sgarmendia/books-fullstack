@@ -1,35 +1,22 @@
-import {
-	BrowserRouter as Router,
-	Route,
-	Redirect,
-	Switch,
-} from "react-router-dom";
-import Home from "./components/Home";
-import { Login } from "./components/Login";
-import React from "react";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { useCookies } from "react-cookie";
+import Books from "./pages/Books";
+import NavBar from "./components/NavBar";
+import Login from "./components/Login";
+import "bootstrap/dist/css/bootstrap.min.css";
 
-const Routes = () => {
+const App = () => {
+	const [cookies] = useCookies(["token"]);
+
 	return (
-		<Router>
-			<Switch>
-				<Route path="/login" component={Login} />
-				<PrivateRoute path="/" component={Home} />
-			</Switch>
-		</Router>
+		<BrowserRouter>
+			<NavBar />
+			<Routes>
+				<Route path="/" element={<Login />} />
+				{cookies.token && <Route path="/books" element={<Books />} />}
+			</Routes>
+		</BrowserRouter>
 	);
 };
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const PrivateRoute: React.FC<any> = ({ component: Component, ...rest }) => {
-	const isAuthenticated = false; // Replace with your authentication logic
-	return (
-		<Route
-			{...rest}
-			render={(props) =>
-				isAuthenticated ? <Component {...props} /> : <Redirect to="/login" />
-			}
-		/>
-	);
-};
-
-export default Routes;
+export default App;

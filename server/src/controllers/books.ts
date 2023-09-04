@@ -29,8 +29,8 @@ export const upsertBook = async (
 			throw new Error("Book data validation error");
 		}
 
-		const message = await bookService.upsertBook(book);
-		res.send(message);
+		const data = await bookService.upsertBook(book);
+		res.send(data);
 	} catch (error) {
 		next(error);
 	}
@@ -39,5 +39,9 @@ export const upsertBook = async (
 export const deleteBookById = async (req: Request, res: Response) => {
 	const id = parseInt(req.params.id);
 	const message = await bookService.deleteBook(id);
+	if (message.includes("not found")) {
+		res.status(401).send(message);
+		return;
+	}
 	res.send(message);
 };

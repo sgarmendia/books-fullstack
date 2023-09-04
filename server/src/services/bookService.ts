@@ -6,14 +6,17 @@ export const getBooks = async () => await BookModel.getAll();
 export const upsertBook = async (book: UpsertBookData) => {
 	if (!book.id) {
 		const createdBook = await BookModel.create(book);
-		return `Book with ID ${createdBook.id} was added.`;
+		return {
+			message: `Book with ID ${createdBook.id} was added.`,
+			book: createdBook,
+		};
 	}
 
 	const updatedBook = await BookModel.update(book);
 
 	return updatedBook
-		? `Book with ID ${updatedBook.id} updated.`
-		: `Unable to update.`;
+		? { message: `Book with ID ${updatedBook.id} updated.`, book: updatedBook }
+		: { message: `Unable to update.` };
 };
 
 export const findById = async (id: number) => {

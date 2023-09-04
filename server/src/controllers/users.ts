@@ -9,20 +9,21 @@ export const getRegisteredUsers = async (_req: Request, res: Response) => {
 };
 
 export const userSignup = async (
-	{ body }: Request,
+	req: Request,
 	res: Response,
 	next: NextFunction
 ) => {
-	const validateUser = UserSchema.safeParse(body);
+	const validateUser = UserSchema.safeParse(req.body);
 
 	try {
 		if (!validateUser.success) {
 			next(validateUser.error);
 		}
 
-		const data = await userService.signupUser(body);
+		const data = await userService.signupUser(req.body);
 		if (data === UserStatus.Registered) {
-			res.status(409).send("User already registered please login");
+			res.status(409).send({ status: "error", message: UserStatus.Registered });
+			return;
 		} else {
 			res.send(data);
 		}
@@ -32,21 +33,28 @@ export const userSignup = async (
 };
 
 export const userLogin = async (
-	{ body }: Request,
+	req: Request,
 	res: Response,
 	next: NextFunction
 ) => {
-	const validateUser = UserSchema.safeParse(body);
+	const validateUser = UserSchema.safeParse(req.body);
 
 	try {
 		if (!validateUser.success) {
 			next(validateUser.error);
 		}
 
-		const user = await userService.loginUser(body);
+		const user = await userService.loginUser(req.body);
 
 		if (user === UserStatus.WrongPassword) {
-			res.status(401).send(UserStatus.WrongPassword);
+			res.cookie("autenticated", false);
+			res
+				.status(401)
+				.send({ status: "error", message: UserStatus.WrongPassword });
+			return;
+		} else if (user === UserStatus.NotFound) {
+			res.status(401).send({ status: "error", message: UserStatus.NotFound });
+			return;
 		} else {
 			res.send(user);
 		}

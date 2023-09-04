@@ -8,7 +8,7 @@ export const verifyJWT = (
 	next: NextFunction
 ) => {
 	try {
-		const jwtByUser = req.headers.authorization || "";
+		const jwtByUser = (req.headers.authorization as string) || "";
 		const jwt = jwtByUser.split(" ").pop();
 		const isUser = verifyToken(`${jwt}`) as { id: string };
 		if (!isUser) {

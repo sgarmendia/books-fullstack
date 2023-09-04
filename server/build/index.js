@@ -14,7 +14,7 @@ app.use(cors_1.default());
 app.use(express_1.default.json());
 // Routes
 app.use("/", users_1.default);
-app.use("/api", books_1.default);
+app.use("/booksapi", books_1.default);
 // Error middleware
 app.use(errorHandler_1.default);
 app.listen(PORT, function () { return console.log("Server listening on port: " + PORT); });

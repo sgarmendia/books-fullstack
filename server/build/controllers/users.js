@@ -72,71 +72,74 @@ var getRegisteredUsers = function (_req, res) { return __awaiter(void 0, void 0,
     });
 }); };
 exports.getRegisteredUsers = getRegisteredUsers;
-var userSignup = function (_a, res, next) {
-    var body = _a.body;
-    return __awaiter(void 0, void 0, void 0, function () {
-        var validateUser, data, error_1;
-        return __generator(this, function (_b) {
-            switch (_b.label) {
-                case 0:
-                    validateUser = validations_1.UserSchema.safeParse(body);
-                    _b.label = 1;
-                case 1:
-                    _b.trys.push([1, 3, , 4]);
-                    if (!validateUser.success) {
-                        next(validateUser.error);
-                    }
-                    return [4 /*yield*/, userService.signupUser(body)];
-                case 2:
-                    data = _b.sent();
-                    if (data === types_1.UserStatus.Registered) {
-                        res.status(409).send("User already registered please login");
-                    }
-                    else {
-                        res.send(data);
-                    }
-                    return [3 /*break*/, 4];
-                case 3:
-                    error_1 = _b.sent();
-                    next(error_1);
-                    return [3 /*break*/, 4];
-                case 4: return [2 /*return*/];
-            }
-        });
+var userSignup = function (req, res, next) { return __awaiter(void 0, void 0, void 0, function () {
+    var validateUser, data, error_1;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0:
+                validateUser = validations_1.UserSchema.safeParse(req.body);
+                _a.label = 1;
+            case 1:
+                _a.trys.push([1, 3, , 4]);
+                if (!validateUser.success) {
+                    next(validateUser.error);
+                }
+                return [4 /*yield*/, userService.signupUser(req.body)];
+            case 2:
+                data = _a.sent();
+                if (data === types_1.UserStatus.Registered) {
+                    res.status(409).send({ status: "error", message: types_1.UserStatus.Registered });
+                    return [2 /*return*/];
+                }
+                else {
+                    res.send(data);
+                }
+                return [3 /*break*/, 4];
+            case 3:
+                error_1 = _a.sent();
+                next(error_1);
+                return [3 /*break*/, 4];
+            case 4: return [2 /*return*/];
+        }
     });
-};
+}); };
 exports.userSignup = userSignup;
-var userLogin = function (_a, res, next) {
-    var body = _a.body;
-    return __awaiter(void 0, void 0, void 0, function () {
-        var validateUser, user, error_2;
-        return __generator(this, function (_b) {
-            switch (_b.label) {
-                case 0:
-                    validateUser = validations_1.UserSchema.safeParse(body);
-                    _b.label = 1;
-                case 1:
-                    _b.trys.push([1, 3, , 4]);
-                    if (!validateUser.success) {
-                        next(validateUser.error);
-                    }
-                    return [4 /*yield*/, userService.loginUser(body)];
-                case 2:
-                    user = _b.sent();
-                    if (user === types_1.UserStatus.WrongPassword) {
-                        res.status(401).send(types_1.UserStatus.WrongPassword);
-                    }
-                    else {
-                        res.send(user);
-                    }
-                    return [3 /*break*/, 4];
-                case 3:
-                    error_2 = _b.sent();
-                    next(error_2);
-                    return [3 /*break*/, 4];
-                case 4: return [2 /*return*/];
-            }
-        });
+var userLogin = function (req, res, next) { return __awaiter(void 0, void 0, void 0, function () {
+    var validateUser, user, error_2;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0:
+                validateUser = validations_1.UserSchema.safeParse(req.body);
+                _a.label = 1;
+            case 1:
+                _a.trys.push([1, 3, , 4]);
+                if (!validateUser.success) {
+                    next(validateUser.error);
+                }
+                return [4 /*yield*/, userService.loginUser(req.body)];
+            case 2:
+                user = _a.sent();
+                if (user === types_1.UserStatus.WrongPassword) {
+                    res.cookie("autenticated", false);
+                    res
+                        .status(401)
+                        .send({ status: "error", message: types_1.UserStatus.WrongPassword });
+                    return [2 /*return*/];
+                }
+                else if (user === types_1.UserStatus.NotFound) {
+                    res.status(401).send({ status: "error", message: types_1.UserStatus.NotFound });
+                    return [2 /*return*/];
+                }
+                else {
+                    res.send(user);
+                }
+                return [3 /*break*/, 4];
+            case 3:
+                error_2 = _a.sent();
+                next(error_2);
+                return [3 /*break*/, 4];
+            case 4: return [2 /*return*/];
+        }
     });
-};
+}); };
 exports.userLogin = userLogin;
