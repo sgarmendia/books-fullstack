@@ -50,8 +50,8 @@ const Login: React.FC = () => {
 
 	return (
 		<Container>
-			<h2>{cookies.token ? "login" : "signup"}</h2>
-			<h4>{message}</h4>
+			<h2>{cookies.token ? "Login" : "Signup"}</h2>
+			<p style={{ color: "red" }}>{message}</p>
 			<Form onSubmit={(e) => handleSubmit(e)}>
 				<Form.Group className="mb-3" controlId="formBasicEmail">
 					<Form.Label>Email address</Form.Label>

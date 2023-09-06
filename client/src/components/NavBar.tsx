@@ -4,6 +4,7 @@ import Navbar from "react-bootstrap/Navbar";
 import Container from "react-bootstrap/Container";
 import Button from "react-bootstrap/Button";
 import ButtonGroup from "react-bootstrap/ButtonGroup";
+import Logo from "../assets/book.svg";
 
 const NavBar = () => {
 	const [cookies, setCookie, removeCookie] = useCookies(["token", "email"]);
@@ -25,7 +26,8 @@ const NavBar = () => {
 	return (
 		<Navbar className="bg-body-tertiary">
 			<Container>
-				<Navbar.Brand href="#">Books App</Navbar.Brand>
+				<img src={Logo} className="logo react" alt="React logo" />
+				<Navbar.Brand>Books App</Navbar.Brand>
 				<Navbar.Toggle />
 				<ButtonGroup aria-label="Basic example">
 					<Button variant="secondary" onClick={() => logout()}>
