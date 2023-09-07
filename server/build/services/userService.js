@@ -14,7 +14,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     function verb(n) { return function (v) { return step([n, v]); }; }
     function step(op) {
         if (f) throw new TypeError("Generator is already executing.");
-        while (_) try {
+        while (g && (g = 0, op[0] && (_ = 0)), _) try {
             if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
             if (y = 0, t) op = [op[0] & 2, t.value];
             switch (op[0]) {
@@ -59,7 +59,7 @@ var signupUser = function (_a) {
                     checkUser = _b.sent();
                     if (checkUser)
                         return [2 /*return*/, types_1.UserStatus.Registered];
-                    return [4 /*yield*/, auth_1.encrypt(password)];
+                    return [4 /*yield*/, (0, auth_1.encrypt)(password)];
                 case 2:
                     hashedPassword = _b.sent();
                     return [4 /*yield*/, users_1.UserModel.create({
@@ -68,7 +68,7 @@ var signupUser = function (_a) {
                         })];
                 case 3:
                     registeredNewUser = _b.sent();
-                    token = jwt_1.generateToken(email);
+                    token = (0, jwt_1.generateToken)(email);
                     return [2 /*return*/, { token: token, email: registeredNewUser.email }];
             }
         });
@@ -87,12 +87,12 @@ var loginUser = function (_a) {
                     if (!user)
                         return [2 /*return*/, types_1.UserStatus.NotFound];
                     passwordHash = user.password;
-                    return [4 /*yield*/, auth_1.verify(password, passwordHash)];
+                    return [4 /*yield*/, (0, auth_1.verify)(password, passwordHash)];
                 case 2:
                     isCorrect = _b.sent();
                     if (!isCorrect)
                         return [2 /*return*/, types_1.UserStatus.WrongPassword];
-                    token = jwt_1.generateToken(user.email);
+                    token = (0, jwt_1.generateToken)(user.email);
                     data = {
                         token: token,
                         email: user.email,

@@ -3,7 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var express_1 = require("express");
 var books_1 = require("../controllers/books");
 var verifySession_1 = require("../middlewares/verifySession");
-var router = express_1.Router();
+var router = (0, express_1.Router)();
 router.get("/books", books_1.getBooks);
 router.get("/book/:id", books_1.getBooksById);
 router.put("/book", verifySession_1.verifyJWT, books_1.upsertBook);

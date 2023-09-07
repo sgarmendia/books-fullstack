@@ -4,14 +4,15 @@ services:
     build:
       context: ./client
     volumes:
-      - ./client:/app
       - /app/node_modules
+      - ./client:/app
   server:
     build:
+      dockerfile: Dockerfile.dev
       context: ./server
     volumes:
-      - ./server:/app
       - /app/node_modules
+      - ./server:/app
   nginx:
     depends_on:
       - server

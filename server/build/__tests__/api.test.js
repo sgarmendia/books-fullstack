@@ -14,7 +14,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     function verb(n) { return function (v) { return step([n, v]); }; }
     function step(op) {
         if (f) throw new TypeError("Generator is already executing.");
-        while (_) try {
+        while (g && (g = 0, op[0] && (_ = 0)), _) try {
             if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
             if (y = 0, t) op = [op[0] & 2, t.value];
             switch (op[0]) {
@@ -49,7 +49,7 @@ var loginUserAndGetToken = function (userData) { return __awaiter(void 0, void 0
     var response;
     return __generator(this, function (_a) {
         switch (_a.label) {
-            case 0: return [4 /*yield*/, supertest_1.default(index_1.default).post("/signup").send(userData)];
+            case 0: return [4 /*yield*/, (0, supertest_1.default)(index_1.default).post("/signup").send(userData)];
             case 1:
                 response = _a.sent();
                 return [2 /*return*/, response.body.token];
@@ -62,7 +62,7 @@ describe("Book Routes", function () {
         var hashedPassword, userData;
         return __generator(this, function (_a) {
             switch (_a.label) {
-                case 0: return [4 /*yield*/, auth_1.encrypt("testpassword")];
+                case 0: return [4 /*yield*/, (0, auth_1.encrypt)("testpassword")];
                 case 1:
                     hashedPassword = _a.sent();
                     userData = {
@@ -78,7 +78,7 @@ describe("Book Routes", function () {
     }); });
     describe("GET /books", function () {
         it("should get all books", function (done) {
-            supertest_1.default(index_1.default)
+            (0, supertest_1.default)(index_1.default)
                 .get("/booksapi/books")
                 .end(function (_err, res) {
                 expect(res.statusCode).to.equal(200);
@@ -94,9 +94,9 @@ describe("Book Routes", function () {
                 author: "Test Author",
                 genre: types_1.Genre.Fiction,
             };
-            supertest_1.default(index_1.default)
+            (0, supertest_1.default)(index_1.default)
                 .put("/booksapi/book")
-                .set("Authorization", "Bearer " + token)
+                .set("Authorization", "Bearer ".concat(token))
                 .send(bookData)
                 .end(function (_err, res) {
                 expect(res.statusCode).to.equal(200);
@@ -111,9 +111,9 @@ describe("Book Routes", function () {
                 author: "Updated Test Author",
                 genre: types_1.Genre.Children,
             };
-            supertest_1.default(index_1.default)
+            (0, supertest_1.default)(index_1.default)
                 .put("/booksapi/book")
-                .set("Authorization", "Bearer " + token)
+                .set("Authorization", "Bearer ".concat(token))
                 .send(bookData)
                 .end(function (_err, res) {
                 expect(res.statusCode).to.equal(200);
@@ -124,9 +124,9 @@ describe("Book Routes", function () {
     });
     describe("DELETE /books", function () {
         it("should delete book with provided ID", function (done) {
-            supertest_1.default(index_1.default)
+            (0, supertest_1.default)(index_1.default)
                 .delete("/booksapi/book/3")
-                .set("Authorization", "Bearer " + token)
+                .set("Authorization", "Bearer ".concat(token))
                 .end(function (_err, res) {
                 expect(res.statusCode).to.equal(200);
                 expect(res.text).to.equal("Book with ID 3 was deleted.");
@@ -142,7 +142,7 @@ describe("User Routes", function () {
     };
     describe("POST /signup", function () {
         it("Should register a new user", function (done) {
-            supertest_1.default(index_1.default)
+            (0, supertest_1.default)(index_1.default)
                 .post("/signup")
                 .send(userData)
                 .end(function (_err, res) {
@@ -152,7 +152,7 @@ describe("User Routes", function () {
             });
         });
         it("Should fail if try to register the same user", function (done) {
-            supertest_1.default(index_1.default)
+            (0, supertest_1.default)(index_1.default)
                 .post("/signup")
                 .send(userData)
                 .end(function (_err, res) {
@@ -167,7 +167,7 @@ describe("User Routes", function () {
     });
     describe("POST /login", function () {
         it("Should login successfully with the created user", function (done) {
-            supertest_1.default(index_1.default)
+            (0, supertest_1.default)(index_1.default)
                 .post("/login")
                 .send(userData)
                 .end(function (_err, res) {
@@ -178,7 +178,7 @@ describe("User Routes", function () {
         });
         it("Should fail with the wrong password", function (done) {
             userData.password = "badpassword";
-            supertest_1.default(index_1.default)
+            (0, supertest_1.default)(index_1.default)
                 .post("/login")
                 .send(userData)
                 .end(function (_err, res) {

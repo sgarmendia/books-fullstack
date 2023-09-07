@@ -9,13 +9,13 @@ var errorHandler_1 = __importDefault(require("./middlewares/errorHandler"));
 var books_1 = __importDefault(require("./routes/books"));
 var users_1 = __importDefault(require("./routes/users"));
 var PORT = process.env.PORT || 4000;
-var app = express_1.default();
-app.use(cors_1.default());
+var app = (0, express_1.default)();
+app.use((0, cors_1.default)());
 app.use(express_1.default.json());
 // Routes
 app.use("/", users_1.default);
 app.use("/booksapi", books_1.default);
 // Error middleware
 app.use(errorHandler_1.default);
-app.listen(PORT, function () { return console.log("Server listening on port: " + PORT); });
+app.listen(PORT, function () { return console.log("Server listening on port: ".concat(PORT)); });
 exports.default = app;
