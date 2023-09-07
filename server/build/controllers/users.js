@@ -77,15 +77,14 @@ var userSignup = function (req, res, next) { return __awaiter(void 0, void 0, vo
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
+                _a.trys.push([0, 2, , 3]);
                 validateUser = validations_1.UserSchema.safeParse(req.body);
-                _a.label = 1;
-            case 1:
-                _a.trys.push([1, 3, , 4]);
                 if (!validateUser.success) {
                     next(validateUser.error);
+                    return [2 /*return*/];
                 }
                 return [4 /*yield*/, userService.signupUser(req.body)];
-            case 2:
+            case 1:
                 data = _a.sent();
                 if (data === types_1.UserStatus.Registered) {
                     res.status(409).send({ status: "error", message: types_1.UserStatus.Registered });
@@ -94,12 +93,12 @@ var userSignup = function (req, res, next) { return __awaiter(void 0, void 0, vo
                 else {
                     res.send(data);
                 }
-                return [3 /*break*/, 4];
-            case 3:
+                return [3 /*break*/, 3];
+            case 2:
                 error_1 = _a.sent();
                 next(error_1);
-                return [3 /*break*/, 4];
-            case 4: return [2 /*return*/];
+                return [3 /*break*/, 3];
+            case 3: return [2 /*return*/];
         }
     });
 }); };
@@ -109,15 +108,14 @@ var userLogin = function (req, res, next) { return __awaiter(void 0, void 0, voi
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
+                _a.trys.push([0, 2, , 3]);
                 validateUser = validations_1.UserSchema.safeParse(req.body);
-                _a.label = 1;
-            case 1:
-                _a.trys.push([1, 3, , 4]);
                 if (!validateUser.success) {
                     next(validateUser.error);
+                    return [2 /*return*/];
                 }
                 return [4 /*yield*/, userService.loginUser(req.body)];
-            case 2:
+            case 1:
                 user = _a.sent();
                 if (user === types_1.UserStatus.WrongPassword) {
                     res.cookie("autenticated", false);
@@ -133,12 +131,12 @@ var userLogin = function (req, res, next) { return __awaiter(void 0, void 0, voi
                 else {
                     res.send(user);
                 }
-                return [3 /*break*/, 4];
-            case 3:
+                return [3 /*break*/, 3];
+            case 2:
                 error_2 = _a.sent();
                 next(error_2);
-                return [3 /*break*/, 4];
-            case 4: return [2 /*return*/];
+                return [3 /*break*/, 3];
+            case 3: return [2 /*return*/];
         }
     });
 }); };

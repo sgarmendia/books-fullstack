@@ -13,11 +13,11 @@ export const userSignup = async (
 	res: Response,
 	next: NextFunction
 ) => {
-	const validateUser = UserSchema.safeParse(req.body);
-
 	try {
+		const validateUser = UserSchema.safeParse(req.body);
 		if (!validateUser.success) {
 			next(validateUser.error);
+			return;
 		}
 
 		const data = await userService.signupUser(req.body);
@@ -37,11 +37,11 @@ export const userLogin = async (
 	res: Response,
 	next: NextFunction
 ) => {
-	const validateUser = UserSchema.safeParse(req.body);
-
 	try {
+		const validateUser = UserSchema.safeParse(req.body);
 		if (!validateUser.success) {
 			next(validateUser.error);
+			return;
 		}
 
 		const user = await userService.loginUser(req.body);
