@@ -56,6 +56,23 @@ describe("Book Routes", () => {
 				});
 		});
 
+		it("should search term", (done) => {
+			request(app)
+				.get("/booksapi/books/Test")
+				.end((_err, res) => {
+					expect(res.statusCode).to.equal(200);
+					expect(res.text).to.equal(
+						JSON.stringify({
+							id: 11,
+							title: "Test Book",
+							author: "Test Author",
+							genre: Genre.Fiction,
+						})
+					);
+					done();
+				});
+		});
+
 		it("When sent with ID should update a book", (done) => {
 			const bookData = {
 				id: 3,

@@ -33,3 +33,10 @@ export const deleteBook = async (id: number) => {
 
 	return `Book with ID ${id} not found.`;
 };
+
+export const search = async (searchTerm: string) => {
+	const book = await BookModel.search(searchTerm);
+	if (book) return book;
+
+	return `not found.`;
+};

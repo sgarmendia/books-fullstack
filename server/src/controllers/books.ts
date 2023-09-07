@@ -45,3 +45,13 @@ export const deleteBookById = async (req: Request, res: Response) => {
 	}
 	res.send(message);
 };
+
+export const searchBook = async (req: Request, res: Response) => {
+	const searchTerm = req.params.search;
+	const message = await bookService.search(searchTerm);
+	if (typeof message === "string" && message === "not found.") {
+		res.status(404).send(message);
+		return;
+	}
+	res.send(message);
+};

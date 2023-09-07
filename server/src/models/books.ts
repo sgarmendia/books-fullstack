@@ -46,4 +46,18 @@ export class BookModel {
 		books[bookIndex] = bookToUpdate;
 		return bookToUpdate;
 	}
+
+	static async search(term: string) {
+		const book = books.find((b) => {
+			return (
+				b.title.includes(term) ||
+				b.author.includes(term) ||
+				b.genre.includes(term)
+			);
+		});
+
+		if (!book) return false;
+
+		return book;
+	}
 }

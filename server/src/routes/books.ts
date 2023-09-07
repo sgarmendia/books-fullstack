@@ -4,6 +4,7 @@ import {
 	getBooksById,
 	upsertBook,
 	deleteBookById,
+	searchBook,
 } from "../controllers/books";
 import { verifyJWT } from "../middlewares/verifySession";
 
@@ -13,5 +14,6 @@ router.get("/books", getBooks);
 router.get("/book/:id", getBooksById);
 router.put("/book", verifyJWT, upsertBook);
 router.delete("/book/:id", verifyJWT, deleteBookById);
+router.get("/books/:search", searchBook);
 
 export default router;
