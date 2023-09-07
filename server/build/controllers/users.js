@@ -118,7 +118,6 @@ var userLogin = function (req, res, next) { return __awaiter(void 0, void 0, voi
             case 1:
                 user = _a.sent();
                 if (user === types_1.UserStatus.WrongPassword) {
-                    res.cookie("autenticated", false);
                     res
                         .status(401)
                         .send({ status: "error", message: types_1.UserStatus.WrongPassword });

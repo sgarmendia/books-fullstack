@@ -47,7 +47,6 @@ export const userLogin = async (
 		const user = await userService.loginUser(req.body);
 
 		if (user === UserStatus.WrongPassword) {
-			res.cookie("autenticated", false);
 			res
 				.status(401)
 				.send({ status: "error", message: UserStatus.WrongPassword });

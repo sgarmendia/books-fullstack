@@ -2,13 +2,34 @@ import request from "supertest";
 import chai from "chai";
 import app from "../index";
 
+import { encrypt } from "../utils/auth";
+
+import { UserData, Genre } from "../types";
+import { JwtPayload } from "jsonwebtoken";
+
 const expect = chai.expect;
 
+const loginUserAndGetToken = async (userData: UserData) => {
+	const response = await request(app).post("/signup").send(userData);
+	return response.body.token;
+};
+
 describe("Book Routes", () => {
+	let token: JwtPayload;
+
+	before(async () => {
+		const hashedPassword = await encrypt("testpassword");
+		const userData = {
+			email: "testuser@email.com",
+			password: hashedPassword,
+		};
+		token = await loginUserAndGetToken(userData);
+	});
+
 	describe("GET /books", () => {
 		it("should get all books", (done) => {
 			request(app)
-				.get("/api/books")
+				.get("/booksapi/books")
 				.end((_err, res) => {
 					expect(res.statusCode).to.equal(200);
 					expect(res.body).to.be.an("array");
@@ -22,14 +43,15 @@ describe("Book Routes", () => {
 			const bookData = {
 				title: "Test Book",
 				author: "Test Author",
-				genre: "fiction",
+				genre: Genre.Fiction,
 			};
 			request(app)
-				.put("/api/book")
+				.put("/booksapi/book")
+				.set("Authorization", `Bearer ${token}`)
 				.send(bookData)
 				.end((_err, res) => {
 					expect(res.statusCode).to.equal(200);
-					expect(res.text).to.equal("Book with ID 11 was added.");
+					expect(res.body.message).to.equal("Book with ID 11 was added.");
 					done();
 				});
 		});
@@ -37,16 +59,17 @@ describe("Book Routes", () => {
 		it("When sent with ID should update a book", (done) => {
 			const bookData = {
 				id: 3,
-				title: "Test Book",
-				author: "Test Author",
-				genre: "fiction",
+				title: "Updated Test Book",
+				author: "Updated Test Author",
+				genre: Genre.Children,
 			};
 			request(app)
-				.put("/api/book")
+				.put("/booksapi/book")
+				.set("Authorization", `Bearer ${token}`)
 				.send(bookData)
 				.end((_err, res) => {
 					expect(res.statusCode).to.equal(200);
-					expect(res.text).to.equal("Book with ID 3 updated.");
+					expect(res.body.message).to.equal("Book with ID 3 updated.");
 					done();
 				});
 		});
@@ -55,7 +78,8 @@ describe("Book Routes", () => {
 	describe("DELETE /books", () => {
 		it("should delete book with provided ID", (done) => {
 			request(app)
-				.delete("/api/book/3")
+				.delete("/booksapi/book/3")
+				.set("Authorization", `Bearer ${token}`)
 				.end((_err, res) => {
 					expect(res.statusCode).to.equal(200);
 					expect(res.text).to.equal("Book with ID 3 was deleted.");
@@ -70,6 +94,7 @@ describe("User Routes", () => {
 		email: "fake@email.com",
 		password: "password",
 	};
+
 	describe("POST /signup", () => {
 		it("Should register a new user", (done) => {
 			request(app)
@@ -77,7 +102,7 @@ describe("User Routes", () => {
 				.send(userData)
 				.end((_err, res) => {
 					expect(res.statusCode).to.equal(200);
-					expect(res.text).to.contain('"email":"fake@email.com"');
+					expect(res.body.email).to.equal(userData.email);
 					done();
 				});
 		});
@@ -88,20 +113,23 @@ describe("User Routes", () => {
 				.send(userData)
 				.end((_err, res) => {
 					expect(res.statusCode).to.equal(409);
-					expect(res.text).to.equal("User already registered please login");
+					expect(res.body).to.deep.equal({
+						status: "error",
+						message: "registered",
+					});
 					done();
 				});
 		});
 	});
 
 	describe("POST /login", () => {
-		it("Should login succefully with the created user", (done) => {
+		it("Should login successfully with the created user", (done) => {
 			request(app)
 				.post("/login")
 				.send(userData)
 				.end((_err, res) => {
 					expect(res.statusCode).to.equal(200);
-					expect(res.text).to.contain('"email":"fake@email.com"');
+					expect(res.body.email).to.equal(userData.email);
 					done();
 				});
 		});
@@ -113,7 +141,10 @@ describe("User Routes", () => {
 				.send(userData)
 				.end((_err, res) => {
 					expect(res.statusCode).to.equal(401);
-					expect(res.text).to.equal("wrong_password");
+					expect(res.body).to.deep.equal({
+						status: "error",
+						message: "wrong_password",
+					});
 					done();
 				});
 		});
