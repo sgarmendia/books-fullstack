@@ -7,7 +7,7 @@ var verifyJWT = function (req, res, next) {
     try {
         var jwtByUser = req.headers.authorization || "";
         var jwt = jwtByUser.split(" ").pop();
-        var isUser = (0, jwt_1.verifyToken)("".concat(jwt));
+        var isUser = jwt_1.verifyToken("" + jwt);
         if (!isUser) {
             res.status(401);
             res.send(types_1.SessionStatus.Invalid);

@@ -1,11 +1,7 @@
 "use strict";
 var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
     if (k2 === undefined) k2 = k;
-    var desc = Object.getOwnPropertyDescriptor(m, k);
-    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
-      desc = { enumerable: true, get: function() { return m[k]; } };
-    }
-    Object.defineProperty(o, k2, desc);
+    Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
 }) : (function(o, m, k, k2) {
     if (k2 === undefined) k2 = k;
     o[k2] = m[k];
@@ -37,7 +33,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     function verb(n) { return function (v) { return step([n, v]); }; }
     function step(op) {
         if (f) throw new TypeError("Generator is already executing.");
-        while (g && (g = 0, op[0] && (_ = 0)), _) try {
+        while (_) try {
             if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
             if (y = 0, t) op = [op[0] & 2, t.value];
             switch (op[0]) {
@@ -59,7 +55,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.deleteBookById = exports.upsertBook = exports.getBooksById = exports.getBooks = void 0;
+exports.searchBook = exports.deleteBookById = exports.upsertBook = exports.getBooksById = exports.getBooks = void 0;
 var bookService = __importStar(require("../services/bookService"));
 var validations_1 = require("../utils/validations");
 var getBooks = function (_req, res) { return __awaiter(void 0, void 0, void 0, function () {
@@ -134,3 +130,22 @@ var deleteBookById = function (req, res) { return __awaiter(void 0, void 0, void
     });
 }); };
 exports.deleteBookById = deleteBookById;
+var searchBook = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var searchTerm, message;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0:
+                searchTerm = req.params.search;
+                return [4 /*yield*/, bookService.search(searchTerm)];
+            case 1:
+                message = _a.sent();
+                if (typeof message === "string" && message === "not found.") {
+                    res.status(404).send(message);
+                    return [2 /*return*/];
+                }
+                res.send(message);
+                return [2 /*return*/];
+        }
+    });
+}); };
+exports.searchBook = searchBook;
