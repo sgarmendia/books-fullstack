@@ -26,7 +26,7 @@ const NavBar = () => {
 	return (
 		<Navbar className="bg-body-tertiary">
 			<Container>
-				<img src={Logo} className="logo react" alt="React logo" />
+				<img src={Logo} className="books-logo" alt="Books logo" />
 				<Navbar.Brand>Books App</Navbar.Brand>
 				<Navbar.Toggle />
 				<ButtonGroup aria-label="Basic example">
